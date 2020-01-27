@@ -34,15 +34,25 @@ function readNum($fileName, $length){
 
     for($i = count($numArray[0])-1; $i>=0; $i--){
         $sum = (string)((int)$numArray[0][$i] + (int)$numArray[1][$i] + $transfer);
-        if(strlen($sum) != strlen((string)$numArray[0][$i])){
-            if($i == 0){
+
+        if(strlen($sum) > strlen($numArray[0][$i])) {
+            if ($i == 0) {
                 $result[] = (string)$sum;
-            }else {
+            } else {
                 $sum = substr($sum, 1);
                 $result[] = $sum;
                 $transfer = 1;
             }
-        }else {
+        }
+            elseif (strlen($sum) < strlen($numArray[0][$i])){
+                $zeros = $numArray[0][$i] - $sum;
+                while(strlen($sum) < $zeros){
+                    $sum = '0' . $sum;
+                }
+                $result[] = (string)$sum;
+            }
+
+        else {
             $result[] = (string)$sum;
             $transfer = 0;
         }
